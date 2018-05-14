@@ -2,7 +2,7 @@ require "jet_black"
 
 RSpec.describe JetBlack::Session, "#run with stdin" do
   it "allows stdin data to be passed to the process" do
-    subject.create_file "hello-world", <<~SH
+    subject.create_executable "hello-world", <<~SH
       #!/bin/sh
 
       echo "What's your name?"
@@ -10,7 +10,6 @@ RSpec.describe JetBlack::Session, "#run with stdin" do
       echo "Hello $name"
     SH
 
-    subject.run("chmod +x hello-world")
     result = subject.run("./hello-world", stdin: "Alice")
 
     expected_output = <<~TXT
